@@ -9,8 +9,10 @@
   },
   "dependencies": {
     "core-js": "^3.6.5",
+    "typeface-montserrat": "0.0.75",
     "vue": "^2.6.11",
     "vue-class-component": "^7.2.3",
+    "vue-moment": "^4.1.0",
     "vue-property-decorator": "^8.4.2"
   },
   "devDependencies": {
