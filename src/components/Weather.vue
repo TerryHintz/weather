@@ -2,12 +2,14 @@
   <div class="root">
     <div class="weather-root">
       <input type="text" class="input-box" v-model="query" @keypress="getWeather"/>
+      <div class="time">Local Time: {{ moment().format('h:mm a') }}</div>
       <div class="location">{{ location }}</div>
       <div class="temp-container">
-        <span class="temperature">{{ temperature }}<sup>°</sup>C</span>
+        <span v-bind:class="{ hot: this.temperature >= 25, cold: this.temperature <= 15 }" class="temperature">{{ temperature }}<sup>°</sup>C</span>
       </div>
-      
       <div class="weather">{{ weather }}</div>
+
+      
     </div>
     
   </div>
@@ -15,9 +17,11 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import moment from 'moment'
 
 @Component
 export default class Weather extends Vue {
+  moment = moment;
   query = "";
   location = "Vancouver";
   temperature = 0;
@@ -26,6 +30,7 @@ export default class Weather extends Vue {
   base_url = 'https://api.openweathermap.org/data/2.5/weather?q=';
 
   mounted(){
+    console.log(moment().format());
     fetch(this.base_url + "Vancouver" + '&APPID=' + this.key).then(res =>{
       return res.json();
     }).then(this.update);
@@ -117,5 +122,21 @@ export default class Weather extends Vue {
   text-align: center;
   font-family: 'Montserrat', sans-serif;
   font-weight: 600;
+}
+
+.time {
+  margin-top: 40px;
+  font-size: 40px;
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 600;
+}
+
+.hot {
+  color: firebrick;
+}
+
+.cold {
+  color: cornflowerblue;
 }
 </style>
